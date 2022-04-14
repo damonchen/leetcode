@@ -1,6 +1,5 @@
 
-#include <iostream>
-#include <vector>
+#include<bits/stdc++.h>
 using namespace std;
 
 void printVector(vector<int> &list) {
@@ -13,59 +12,24 @@ void printVector(vector<int> &list) {
 class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
+      // 递增栈
+      stack<int> s;
+      int largest = 0;
+      heights.push_back(0);     // 退出条件
       int size = heights.size();
-      if(size == 1) {
-        return heights[0];
-      }
 
-      vector<int> rect;
       for(int i=0; i<size; i++) {
-        vector<int> sub;
-        int minVal = heights[i];
-        sub.push_back(minVal);
-
-        for(int j=i+1; j<size; j++) {
-          sub.push_back(heights[j]);
-          if(minVal > heights[j] ) {
-            minVal = heights[j];
-            break;
-          }
-        }
-
-        // 两种情况，第一种情况，第一个最小，第二种情况，最后一个最小
-        int subSize = sub.size();
-        if(subSize == 1) {
-          rect.push_back(sub[0]);
-          continue;
-        }
-
-
-        if(sub[0] < sub[subSize-1]) {
-          int largest = sub[0] * subSize;
-          rect.push_back(largest);
+        if(s.empty() || heights[s.top()] < heights[i]) {
+          s.push(i);
         } else {
-          // 最后一个最小
-          int v1 = sub[0] * (subSize-1);
-          int v2 = sub[subSize-1] * subSize;
-          rect.push_back(v1 > v2 ? v1: v2);
-        }
+          int tp = s.top();
+          s.pop();
 
-        // int largest = largestRectangleArea(sub);
+          // cout << heights[tp]  << " i " << i << " " << (s.empty() ? i : i - s.top() - 1 ) << endl;
 
-        // cout << "minVal: " << minVal << endl;
-        // rect.push_back(largest);
-      }
-
-      // printVector(rect);
-
-      size = rect.size();
-      if(size == 0) {
-        return 0;
-      }
-      int largest = rect[0];
-      for(int i=0; i<size; i++) {
-        if(largest < rect[i]) {
-          largest = rect[i];
+          int v =  heights[tp] * (s.empty() ? i : i - s.top() - 1);
+          largest = largest > v ? largest : v;
+          i--;
         }
       }
 
@@ -77,9 +41,11 @@ int main() {
   Solution s = Solution();
 
   vector<int> heights;
-  heights.push_back(2);
-  heights.push_back(4);
   // heights.push_back(2);
+  // heights.push_back(1);
+  // heights.push_back(2);
+  heights.push_back(4);
+  heights.push_back(2);
   // heights.push_back(1);
   // heights.push_back(5);
   // heights.push_back(6);
