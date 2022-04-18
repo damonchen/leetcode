@@ -16,6 +16,7 @@ public:
 		  char r = s[right];
 		  int sub_max = 0;
 		  // 右边的先滑动
+		  // cout << " left " << left << " right " << right << endl;
 		  if(!cont[r]) {
 			cont[r] = true;
 			right++;
@@ -29,6 +30,7 @@ public:
 				  }
 				  middle++;
 			  }
+			  // cout << " left " << left << " middle " << middle << " right " << right << endl;
 			  sub_max = max(middle-left, right-middle);
 			  // 移除重复的
 			  for(int i=left; i<=middle; i++) {
@@ -37,6 +39,9 @@ public:
 
 			  left = middle + 1;
 		  }
+
+		// 让最后没有重复的一次，能够得到计算
+		 sub_max = max(sub_max, right-left);
 
 		 longest = max(longest, sub_max); 
 	  }
@@ -47,8 +52,9 @@ public:
 
 
 int main() {
-  // string str = "abcabcbb";
-  string str = "hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  string str = "abcabcbb";
+  // string str=" "; 
+  // string str = "hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   Solution s;
   int l = s.lengthOfLongestSubstring(str);
   cout << l << endl;
